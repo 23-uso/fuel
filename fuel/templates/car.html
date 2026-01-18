@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>車を登録 | 燃費アプリ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('{{ bg_image }}');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            transition: background-image 0.5s ease-in-out;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .navbar {
+            background-color: rgba(27, 4, 118, 0.9) !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand navbar-dark bg-primary mb-4 shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold ps-3" href="{% url 'fuel_list' %}"> 燃費管理アプリ</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <h2 class="h4 mb-4 text-secondary">新しい車を登録</h2>
+                        {% if error %}
+                            <div class="alert alert-danger" role="alert">{{ error }}</div>
+                        {% endif %}
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="name" class="form-label">車名 (必須)</label>
+                                <input type="text" name="name" id="name" class="form-control form-control-lg" placeholder="例: プリウス" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="manufacturer" class="form-label">メーカー</label>
+                                <input type="text" name="manufacturer" id="manufacturer" class="form-control" placeholder="例: トヨタ">
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg">この車を登録する</button>
+                                <a href="{% url 'fuel_list' %}" class="btn btn-outline-secondary">キャンセルして戻る</a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer bg-white text-muted text-center py-3">
+                        現在の登録台数: <strong>{{ car_count }}</strong> / 4
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
